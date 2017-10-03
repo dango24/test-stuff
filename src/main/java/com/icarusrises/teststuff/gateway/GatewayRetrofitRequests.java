@@ -40,10 +40,18 @@ public interface GatewayRetrofitRequests {
     Call<List<String>> getNextUrls(@Query("num_of_comparison_per_test") int numOfComparisonPerTest);
 
 
-    @Multipart
+   /* @Multipart
     @POST("upload")
     Call<String> uploadPhoto(
-        @Part("message") RequestBody message,
+        @Part("payload") RequestBody payload,
         @Part MultipartBody.Part photo
+    );
+*/
+
+    @Multipart
+    @POST("upload")
+    Call<String> uploadPhoto2(
+            @Part("payload") RequestBody message,
+            @Part List<MultipartBody.Part> files
     );
 }

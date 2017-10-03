@@ -16,6 +16,8 @@ import retrofit2.Retrofit;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -57,12 +59,19 @@ public class GatewayServiceImp {
 
         RequestBody message = RequestBody.create(MultipartBody.FORM, new Gson().toJson(new UrlWrapper("dango&Esif")));
 
-        File photoFile = new File("/home/dango/Downloads/dango_p.jpg");
+        File photoFile1 = new File("/home/dango/Downloads/dango_p.jpg");
+        RequestBody photoPart1 = RequestBody.create(MediaType.parse(".jpg"), photoFile1);
+        MultipartBody.Part file1 = MultipartBody.Part.createFormData("photo1", photoFile1.getName(), photoPart1);
 
-        RequestBody photoPart = RequestBody.create(MediaType.parse(".jpg"), photoFile);
+        File photoFile2 = new File("/home/dango/Downloads/esfir_p.jpg");
+        RequestBody photoPart2 = RequestBody.create(MediaType.parse(".jpg"), photoFile2);
+        MultipartBody.Part file2 = MultipartBody.Part.createFormData("photo2", photoFile2.getName(), photoPart2);
 
-        MultipartBody.Part file = MultipartBody.Part.createFormData("photo", photoFile.getName(), photoPart);
+        List<MultipartBody.Part> parts = new ArrayList<>();
 
-        return requestHandler.execute(gatewayRetrofitRequests.uploadPhoto(message,file));
+        parts.add(file1);
+        parts.add(file2);
+
+        return requestHandler.execute(gatewayRetrofitRequests.uploadPhoto2(message, parts));
     }
 }
